@@ -1,0 +1,1170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#02150D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Joseph turns eleven.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>Joseph's Eleventh</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Manrope:wght@400;500;600;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* ===================================================================
+   TOKENS — the whole palette is built around Joseph's green
+   =================================================================== */
+:root{
+  --moss:#02150D;          /* deepest ground            */
+  --pine:#06251A;          /* panel ground              */
+  --forest:#0B3A28;
+  --emerald:#10B981;       /* the hero green            */
+  --jade:#34D399;
+  --mint:#6EE7B7;
+  --lime:#A3E635;
+  --gold:#FFD166;
+  --amber:#FFA33C;
+  --cream:#F2FFF8;
+  --cream-soft:#B9DCC9;
+  --cream-faint:#7FA894;
+  --edge:rgba(163,230,53,.18);
+  --glass:rgba(6,37,26,.62);
+  --shadow:0 26px 70px rgba(0,0,0,.6);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --r:20px;
+}
+*,*::before,*::after{box-sizing:border-box;}
+/* ---------------------------------------------------------------------
+   MOBILE VIEWPORT HEIGHT
+   100vh is measured against the *largest* viewport on phones, so iOS
+   Safari and Chrome Android hide the bottom of a 100vh layout behind the
+   address bar. Order matters: each line overrides the one above it only
+   where the browser understands it.
+   --------------------------------------------------------------------- */
+html,body{margin:0;overflow:hidden;background:var(--moss);}
+html,body{height:100vh;}
+html,body{height:-webkit-fill-available;}
+@supports (height:100dvh){ html,body{height:100dvh;} }
+body{
+  font-family:"Manrope",ui-sans-serif,system-ui,sans-serif;
+  color:var(--cream);font-size:16px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;
+  overscroll-behavior:none;
+}
+h1,h2,h3{margin:0;font-family:"Fredoka",ui-rounded,system-ui,sans-serif;font-weight:600;text-wrap:balance;}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;}
+button{font:inherit;color:inherit;cursor:pointer;}
+:focus-visible{outline:3px solid var(--lime);outline-offset:3px;border-radius:8px;}
+
+/* ambient green aurora, alive under every scene ---------------------- */
+.aura{position:fixed;inset:-25%;z-index:0;filter:blur(90px);opacity:.5;pointer-events:none;}
+.aura i{position:absolute;border-radius:50%;mix-blend-mode:screen;animation:float 24s var(--ease) infinite alternate;}
+.aura i:nth-child(1){width:52vmax;height:52vmax;left:-10%;top:-14%;background:#0E7C55;}
+.aura i:nth-child(2){width:40vmax;height:40vmax;right:-8%;top:10%;background:#65A30D;animation-duration:29s;}
+.aura i:nth-child(3){width:44vmax;height:44vmax;left:26%;bottom:-20%;background:#047857;animation-duration:34s;}
+@keyframes float{to{transform:translate3d(7vw,5vh,0) scale(1.2);}}
+
+#fw{position:fixed;inset:0;width:100%;height:100%;z-index:6;pointer-events:none;}
+
+/* scenes ------------------------------------------------------------- */
+.scene{
+  position:fixed;inset:0;z-index:3;display:grid;place-items:center;
+  opacity:0;visibility:hidden;transform:scale(.985);
+  transition:opacity .8s var(--ease),transform .8s var(--ease),visibility .8s;
+}
+.scene.live{opacity:1;visibility:visible;transform:none;}
+
+/* ===================================================================
+   GATE — one tap, because browsers will not start audio without it
+   =================================================================== */
+#gate{z-index:20;background:radial-gradient(ellipse at 50% 40%,#0A3826 0%,var(--moss) 68%);}
+.gate-card{
+  display:grid;justify-items:center;gap:16px;text-align:center;padding:32px 26px;
+  max-width:min(92vw,520px);
+}
+.crest{
+  width:112px;height:112px;border-radius:50%;display:grid;place-items:center;
+  background:conic-gradient(from 210deg,var(--emerald),var(--lime),var(--gold),var(--emerald));
+  box-shadow:0 0 60px rgba(52,211,153,.45);
+  animation:pulse 2.8s var(--ease) infinite;
+}
+.crest span{
+  width:96px;height:96px;border-radius:50%;background:var(--moss);
+  display:grid;place-items:center;font-family:"Fredoka",sans-serif;font-size:40px;color:var(--lime);
+}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.045);}}
+.gate-card h1{font-size:clamp(28px,7vw,54px);line-height:1;}
+.gate-card h1 em{font-style:normal;background:linear-gradient(120deg,var(--lime),var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;}
+.gate-card p{margin:0;color:var(--cream-soft);font-size:clamp(14px,3.2vw,17px);max-width:34ch;}
+.verses{display:grid;gap:12px;max-width:36ch;}
+.verses p{display:grid;gap:3px;}
+.verses .q{font-size:clamp(13.5px,3.1vw,16px);line-height:1.45;color:var(--cream-soft);}
+.verses cite{
+  font-style:normal;font-family:"JetBrains Mono",monospace;font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--lime);
+}
+.start{
+  margin-top:6px;border:0;border-radius:999px;padding:16px 38px;
+  font-family:"Fredoka",sans-serif;font-size:19px;font-weight:600;color:#04221A;
+  background:linear-gradient(180deg,var(--jade),var(--emerald));
+  box-shadow:0 12px 0 #056046,0 22px 40px rgba(5,150,105,.35);
+  transition:transform .14s var(--ease),box-shadow .14s var(--ease);
+}
+.start:active{transform:translateY(9px);box-shadow:0 3px 0 #056046;}
+.start[disabled]{filter:grayscale(.5);opacity:.7;cursor:progress;box-shadow:0 12px 0 #056046;}
+.load{width:min(320px,80vw);height:5px;border-radius:99px;background:rgba(255,255,255,.10);overflow:hidden;}
+.load i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--emerald),var(--lime));transition:width .25s linear;}
+.tiny{font-size:12.5px;color:var(--cream-faint);letter-spacing:.04em;}
+
+/* ===================================================================
+   PHASE 1 — SLIDESHOW
+   =================================================================== */
+#phase1{background:#000;}
+.stage{position:absolute;inset:0;overflow:hidden;}
+.slide{
+  position:absolute;inset:0;opacity:0;
+  transition:opacity 1.15s var(--ease);
+  will-change:opacity;
+}
+.slide.on{opacity:1;}
+/* The photo itself is NEVER cropped: object-fit:contain shows all of it.
+   A blurred copy of the same picture fills whatever space is left over,
+   so a portrait photo on a wide screen still looks designed.            */
+.slide .wash{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+  filter:blur(42px) saturate(1.3) brightness(.42);transform:scale(1.15);
+}
+.slide .pic{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;
+  transform-origin:50% 50%;
+}
+.slide.on .pic{animation:var(--kb-name,kbA) var(--kb-dur,10.6s) linear forwards;}
+/* Four gentle moves. Every keyframe stays at scale <= 1, so the picture
+   can drift and breathe without a single pixel ever leaving the frame.  */
+.kb0{--kb-name:kbA;} .kb1{--kb-name:kbB;} .kb2{--kb-name:kbC;} .kb3{--kb-name:kbD;}
+@keyframes kbA{from{transform:scale(.952) translate3d(-.7%,.5%,0);}to{transform:scale(1) translate3d(0,0,0);}}
+@keyframes kbB{from{transform:scale(1) translate3d(0,0,0);}to{transform:scale(.952) translate3d(.7%,-.5%,0);}}
+@keyframes kbC{from{transform:scale(.968) translate3d(.8%,-.2%,0);}to{transform:scale(1) translate3d(0,.2%,0);}}
+@keyframes kbD{from{transform:scale(1) translate3d(0,.2%,0);}to{transform:scale(.962) translate3d(-.8%,-.3%,0);}}
+.vignette{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 50% 42%,transparent 44%,rgba(0,0,0,.62) 100%),
+    linear-gradient(180deg,rgba(2,21,13,.72) 0%,transparent 22%,transparent 62%,rgba(2,21,13,.88) 100%);
+}
+.hud{position:absolute;inset:auto 0 0 0;padding:0 clamp(16px,4vw,40px) clamp(18px,4vh,34px);display:grid;gap:12px;}
+.hud-top{position:absolute;top:clamp(16px,4vh,34px);left:0;right:0;display:flex;justify-content:space-between;
+  padding:0 clamp(16px,4vw,40px);align-items:center;gap:12px;}
+.wordmark{font-family:"Fredoka",sans-serif;font-size:clamp(15px,3.4vw,24px);letter-spacing:.01em;}
+.wordmark em{font-style:normal;color:var(--lime);}
+.counter{font-size:clamp(12px,2.6vw,15px);color:var(--cream-soft);letter-spacing:.14em;}
+.counter b{color:var(--lime);font-weight:700;}
+.dots{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;}
+.dots i{width:22px;height:3px;border-radius:99px;background:rgba(255,255,255,.22);transition:background .4s;}
+.dots i.done{background:var(--mint);}
+.dots i.now{background:var(--lime);box-shadow:0 0 12px var(--lime);}
+.bar{height:3px;border-radius:99px;background:rgba(255,255,255,.16);overflow:hidden;}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--emerald),var(--lime),var(--gold));}
+.skip{
+  position:absolute;right:clamp(16px,4vw,40px);bottom:clamp(58px,10vh,86px);
+  background:rgba(2,21,13,.5);border:1px solid var(--edge);border-radius:999px;
+  padding:7px 16px;font-size:12.5px;color:var(--cream-soft);backdrop-filter:blur(6px);
+}
+.skip:hover{color:var(--cream);border-color:var(--lime);}
+
+/* ===================================================================
+   PHASE 2 — SILENT COUNTDOWN
+   =================================================================== */
+#phase2{background:radial-gradient(ellipse at 50% 50%,#052018 0%,#010B07 70%);}
+.count-wrap{display:grid;place-items:center;gap:22px;text-align:center;}
+.count-label{
+  font-family:"JetBrains Mono",monospace;font-size:clamp(10px,2.6vw,13px);
+  letter-spacing:.5em;text-transform:uppercase;color:var(--cream-faint);
+  padding-left:.5em;
+}
+.dial{position:relative;width:min(70vw,min(58vh,400px));aspect-ratio:1;display:grid;place-items:center;}
+.dial svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);}
+.dial .rail{fill:none;stroke:rgba(163,230,53,.10);stroke-width:4;}
+.dial .live{fill:none;stroke:url(#cg);stroke-width:4;stroke-linecap:round;
+  filter:drop-shadow(0 0 16px rgba(163,230,53,.6));transition:stroke-dashoffset .12s linear;}
+.numeral{
+  font-family:"Fredoka",sans-serif;font-size:clamp(90px,26vw,230px);line-height:.85;
+  background:linear-gradient(160deg,var(--mint),var(--lime) 55%,var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 10px 40px rgba(110,231,183,.28));
+}
+.numeral.beat{animation:beat .62s var(--ease);}
+@keyframes beat{0%{transform:scale(1.42);opacity:.15;filter:blur(6px);}55%{transform:scale(.97);}100%{transform:scale(1);opacity:1;filter:blur(0);}}
+.silent-note{font-size:13px;color:var(--cream-faint);letter-spacing:.18em;text-transform:uppercase;}
+
+/* ===================================================================
+   PHASE 3 — CAKE, CANDLES, FIREWORKS  (green everywhere)
+   =================================================================== */
+#phase3{background:radial-gradient(ellipse at 50% 78%,#0C4A31 0%,#04170F 62%,#010A06 100%);}
+.finale{display:grid;place-items:center;gap:clamp(10px,2.2vh,24px);text-align:center;padding:clamp(10px,3vh,26px);width:100%;}
+.finale h2{font-size:clamp(25px,6.6vw,64px);line-height:.98;letter-spacing:-.01em;}
+.finale h2 .g{
+  background:linear-gradient(115deg,var(--mint),var(--lime) 46%,var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 6px 26px rgba(163,230,53,.35));
+}
+.finale h2 .age{
+  display:inline-block;padding:0 .18em;border-radius:14px;
+  background:linear-gradient(180deg,var(--jade),var(--emerald));color:#04221A;
+  transform:rotate(-3deg);box-shadow:0 8px 0 #056046;
+}
+.sub{margin:0;color:var(--cream-soft);font-size:clamp(13px,2.9vw,18px);max-width:40ch;}
+
+/* ---- the cake ---- */
+.cake{position:relative;width:clamp(244px,46vh,420px);touch-action:none;user-select:none;filter:drop-shadow(0 30px 34px rgba(0,0,0,.55));}
+.candles{display:flex;justify-content:center;align-items:flex-end;gap:clamp(3px,1.2vh,9px);position:relative;z-index:3;margin-bottom:-6px;}
+.candle{position:relative;width:9px;height:clamp(26px,5.4vh,46px);border-radius:5px;
+  background:repeating-linear-gradient(45deg,#FFFDF5 0 5px,var(--emerald) 5px 10px);
+  box-shadow:0 2px 0 rgba(0,0,0,.25) inset;}
+.candle:nth-child(3n+2){background:repeating-linear-gradient(45deg,#FFFDF5 0 5px,var(--lime) 5px 10px);}
+.candle:nth-child(3n+3){background:repeating-linear-gradient(45deg,#FFFDF5 0 5px,var(--gold) 5px 10px);}
+.wick{position:absolute;left:50%;top:-7px;width:2px;height:7px;margin-left:-1px;background:#3B2F1E;border-radius:2px;}
+.flame{
+  position:absolute;left:50%;top:-25px;width:14px;height:21px;margin-left:-7px;
+  border-radius:50% 50% 46% 46%/64% 64% 36% 36%;transform-origin:50% 100%;
+  background:radial-gradient(ellipse at 50% 74%,#FFFDE7 0 20%,var(--gold) 42%,var(--amber) 72%,rgba(255,120,0,0) 100%);
+  filter:drop-shadow(0 0 14px rgba(255,190,80,.95));
+  animation:flick .34s ease-in-out infinite alternate;
+}
+@keyframes flick{
+  from{transform:scale(1) rotate(-6deg) translateY(0);}
+  to{transform:scale(1.18,1.26) rotate(6deg) translateY(-2px);}
+}
+.candle.lean .flame{animation-duration:.11s;transform:rotate(30deg) scaleY(.68);}
+.candle.out .flame{opacity:0;transform:scale(.1) translateY(6px);transition:opacity .3s,transform .3s;}
+.smoke{position:absolute;left:50%;top:-20px;width:9px;height:9px;margin-left:-4.5px;border-radius:50%;
+  background:rgba(226,240,232,.55);opacity:0;}
+.candle.out .smoke{animation:puff 1.9s ease-out forwards;}
+@keyframes puff{0%{opacity:.75;transform:translateY(0) scale(.5);}100%{opacity:0;transform:translateY(-92px) scale(2.8);}}
+
+.tier{position:relative;margin:0 auto;border-radius:16px;}
+.tier::after{ /* frosting collar */
+  content:"";position:absolute;left:-2px;right:-2px;top:-11px;height:22px;border-radius:14px;
+  background:var(--frost);filter:brightness(1.06);
+}
+.tier::before{ /* drips */
+  content:"";position:absolute;left:-2px;right:-2px;top:4px;height:18px;
+  background:radial-gradient(circle at 10px 0,var(--frost) 9px,transparent 10px) repeat-x 0 0/24px 18px;
+}
+.t1{width:56%;height:clamp(28px,5vh,48px);background:linear-gradient(180deg,#3FCF8E,#14A16A);--frost:#D6FFE9;}
+.t2{width:78%;height:clamp(31px,5.6vh,54px);background:linear-gradient(180deg,#2FB77C,#0B8055);--frost:#BEFCD9;}
+.t3{width:100%;height:clamp(34px,6.2vh,60px);background:linear-gradient(180deg,#26A16D,#076647);--frost:#A7F3CF;}
+.sprinkles{position:absolute;inset:auto 0 0 0;height:100%;pointer-events:none;}
+.sprinkles i{position:absolute;width:7px;height:3px;border-radius:2px;background:var(--gold);opacity:.9;}
+.plate{width:116%;height:16px;margin:8px -8% 0;border-radius:50%;
+  background:linear-gradient(180deg,#EAFBF2,#8FB9A6);box-shadow:0 10px 22px rgba(0,0,0,.45);}
+
+/* ---- blow interface ---- */
+.blow{display:grid;gap:10px;justify-items:center;width:min(560px,94vw);}
+.meter{width:100%;height:10px;border-radius:99px;background:rgba(255,255,255,.10);overflow:hidden;
+  border:1px solid var(--edge);}
+.meter i{display:block;height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,var(--emerald),var(--lime),var(--gold));transition:width .07s linear;}
+.blow-row{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;}
+.btn{
+  border:0;border-radius:999px;padding:13px 26px;font-family:"Fredoka",sans-serif;font-size:16px;font-weight:600;
+  background:linear-gradient(180deg,var(--jade),var(--emerald));color:#04221A;box-shadow:0 8px 0 #056046;
+  transition:transform .13s var(--ease),box-shadow .13s var(--ease);
+}
+.btn:active{transform:translateY(6px);box-shadow:0 2px 0 #056046;}
+.btn.ghost{background:rgba(255,255,255,.07);color:var(--cream);box-shadow:none;border:1px solid var(--edge);
+  font-family:"Manrope",sans-serif;font-size:14px;font-weight:600;padding:11px 20px;}
+.btn.ghost:active{transform:translateY(2px);}
+.btn[disabled]{opacity:.4;cursor:not-allowed;}
+.done .blow{display:none;}
+.win{display:none;}
+.done .win{display:grid;gap:12px;justify-items:center;animation:rise .9s var(--ease);}
+@keyframes rise{from{opacity:0;transform:translateY(26px) scale(.94);}to{opacity:1;transform:none;}}
+.win .big{
+  font-family:"Fredoka",sans-serif;font-size:clamp(26px,8vw,86px);line-height:1;
+  background:linear-gradient(120deg,var(--gold),var(--lime) 50%,var(--mint));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.blessing{
+  margin:0;display:grid;gap:7px;max-width:34ch;justify-items:center;
+  padding:14px 20px;border-radius:var(--r);
+  background:rgba(6,37,26,.55);border:1px solid var(--edge);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+}
+.blessing span{font-size:clamp(13.5px,3.1vw,17px);line-height:1.45;color:var(--cream);}
+.blessing cite{
+  font-style:normal;font-family:"JetBrains Mono",monospace;font-size:11px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--gold);
+}
+.toast{
+  position:fixed;left:50%;bottom:88px;transform:translate(-50%,16px);z-index:30;
+  background:rgba(3,25,17,.94);border:1px solid var(--edge);border-radius:999px;padding:10px 20px;font-size:14px;
+  opacity:0;pointer-events:none;transition:.32s var(--ease);
+}
+.toast.on{opacity:1;transform:translate(-50%,0);}
+/* =====================================================================
+   MOBILE & TABLET
+   Phones are short, notched and touch-only. These queries keep every
+   scene inside the visible viewport without ever needing to scroll.
+   ===================================================================== */
+/* keep the UI clear of the notch and the home-bar */
+.hud{padding-bottom:calc(clamp(18px,4vh,34px) + env(safe-area-inset-bottom,0px));}
+.hud-top{padding-top:env(safe-area-inset-top,0px);}
+.toast{bottom:calc(88px + env(safe-area-inset-bottom,0px));}
+
+/* phones, portrait */
+@media (max-width:640px){
+  .gate-card{gap:13px;padding:20px 18px;}
+  .crest{width:88px;height:88px;} .crest span{width:74px;height:74px;font-size:31px;}
+  .verses{gap:9px;}
+  .start{padding:15px 32px;font-size:18px;}
+  .slide .wash{filter:blur(30px) saturate(1.3) brightness(.42);}  /* cheaper blur */
+  .finale{gap:10px;}
+  .cake{width:min(78vw,268px);}
+  .blessing{padding:12px 15px;}
+  .aura{filter:blur(60px);}                 /* big blurs are costly on phones */
+}
+/* short screens: phones in landscape, small laptops */
+@media (max-height:620px){
+  .gate-card{gap:9px;padding:12px;}
+  .crest{width:64px;height:64px;} .crest span{width:53px;height:53px;font-size:23px;}
+  .verses{gap:7px;} .verses .q{font-size:12.5px;line-height:1.35;}
+  .finale h2{font-size:clamp(20px,4.4vw,34px);}
+  .cake{width:clamp(150px,30vh,220px);}
+  .candle{height:clamp(18px,4vh,26px);}
+  .blessing{padding:9px 14px;} .blessing span{font-size:13px;}
+  .dial{width:min(46vh,300px);}
+}
+/* tablets */
+@media (min-width:641px) and (max-width:1024px){
+  .cake{width:min(56vw,340px);}
+  .gate-card{max-width:min(88vw,560px);}
+}
+/* touch devices never get hover-only affordances */
+@media (hover:none){
+  .skip:hover,.start:hover{filter:none;}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;}
+  .slide{transition-duration:.2s;}
+}
+
+/* Birthday message cards: lively green, warm gold, comfortable reading. */
+#gate,.intermission {background:radial-gradient(ellipse at 15% 10%,rgba(163,230,53,.14),transparent 55%),radial-gradient(ellipse at 85% 90%,rgba(255,209,102,.10),transparent 55%),var(--moss);}
+#gate,#beforeCake{overflow-y:auto;padding:64px 16px 28px;}
+.gate-card{max-width:min(94vw,660px);gap:14px;margin:auto;}
+.party-label{font-size:14px;font-weight:800;letter-spacing:.15em;color:var(--gold);margin:0;}
+.birthday-message{font-size:clamp(18px,2.8vw,23px);line-height:1.55;font-weight:600;margin:5px 0;max-width:540px;}
+.birthday-wish{color:var(--cream-soft);font-size:16px;line-height:1.65;max-width:510px;margin:0 0 7px;}
+.verses{display:flex;gap:20px;border-top:1px solid var(--edge);padding-top:12px;}
+.verses p{flex:1;font-size:14px;margin:0;}.verses cite{font-size:13px;}
+.crest{width:84px;height:84px;}.crest span{width:72px;height:72px;font-size:34px;}
+.intermission{border:1px solid var(--edge);border-radius:30px;padding:34px;box-shadow:var(--shadow);}
+.intermission h2{font-size:clamp(32px,6vw,50px);line-height:1.1;}.intermission h2 em{color:var(--lime);font-style:normal;}
+.cake-emoji{font-size:55px;line-height:1.2;}
+.sound-toggle{position:fixed;z-index:30;right:max(16px,env(safe-area-inset-right));top:max(14px,env(safe-area-inset-top));background:#06251aeF;border:1px solid var(--edge);padding:10px 15px;border-radius:30px;font-size:14px;}
+#phase1 .hud-top{padding-top:70px;}
+.start{min-height:52px;}.start:hover{filter:brightness(1.1);}
+@media(max-width:520px){.verses{flex-direction:column;gap:9px;}.gate-card{padding:20px 10px;}.intermission{padding:25px 19px;}.birthday-message{font-size:18px;}}
+@media(prefers-reduced-motion:reduce){.aura,.crest{animation:none!important;}.slide .pic{animation:none!important;}}
+</style>
+</head>
+<body>
+
+<div class="aura"><i></i><i></i><i></i></div>
+<canvas id="fw"></canvas>
+
+<!-- ============================ GATE ============================ -->
+<section class="scene live" id="gate">
+  <div class="gate-card">
+    <div class="crest"><span>11</span></div>
+    <h1>Happy Birthday,<br><em>Joseph</em></h1>
+    <div class="verses">
+      <p><span class="q">“Children are a heritage from the Lord, offspring a reward from him.”</span><cite>Psalm 127:3</cite></p>
+      <p><span class="q">“And Jesus grew in wisdom and stature, and in favour with God and man.”</span><cite>Luke 2:52</cite></p>
+    </div>
+    <button class="start" id="startBtn" disabled>Loading…</button>
+    <div class="load"><i id="loadBar"></i></div>
+    <p class="tiny" id="loadText">preparing the photos</p>
+  </div>
+</section>
+
+<!-- ========================== PHASE 1 =========================== -->
+<section class="scene" id="phase1">
+  <div class="stage" id="stage"></div>
+  <div class="vignette"></div>
+  <div class="hud-top">
+    <div class="wordmark">Joseph <em>· eleven</em></div>
+    <div class="counter mono"><b id="idx">01</b> / <span id="total">11</span></div>
+  </div>
+  <div class="hud">
+    <div class="dots" id="dots"></div>
+    <div class="bar"><i id="slideBar"></i></div>
+  </div>
+</section>
+
+<section class="scene" id="beforeCake" aria-labelledby="cakeMessage">
+  <div class="gate-card intermission">
+    <p class="party-label">CELEBRATING ELEVEN WONDERFUL YEARS</p>
+    <div class="cake-emoji" aria-hidden="true">🎂</div>
+    <h2 id="cakeMessage">Happy 11th Birthday,<br><em>Joseph</em></h2>
+    <blockquote class="blessing"><span>“The Lord bless you and keep you; the Lord make his face shine on you and be gracious to you.”</span><cite>Numbers 6:24–25</cite></blockquote>
+    <button class="start" id="countdownBtn">Start the countdown →</button>
+  </div>
+</section>
+
+<!-- ========================== PHASE 2 =========================== -->
+<section class="scene" id="phase2">
+  <div class="count-wrap">
+    <p class="count-label">the cake is coming</p>
+    <div class="dial">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#6EE7B7"/><stop offset="60%" stop-color="#A3E635"/><stop offset="100%" stop-color="#FFD166"/>
+        </linearGradient></defs>
+        <circle class="rail" cx="100" cy="100" r="90"/>
+        <circle class="live" id="ring" cx="100" cy="100" r="90" stroke-dasharray="565.5" stroke-dashoffset="0"/>
+      </svg>
+      <div class="numeral" id="num">10</div>
+    </div>
+    <p class="silent-note">the cake is nearly ready</p>
+  </div>
+</section>
+
+<!-- ========================== PHASE 3 =========================== -->
+<section class="scene" id="phase3">
+  <div class="finale" id="finale">
+    <h2><span class="g">HAPPY</span> <span class="age">11</span><span class="g">th BIRTHDAY</span><br><span class="g">JOSEPH</span></h2>
+
+    <div class="cake" id="cake">
+      <div class="candles" id="candles"></div>
+      <div class="tier t3"><div class="sprinkles" data-n="9"></div></div>
+      <div class="tier t2"><div class="sprinkles" data-n="7"></div></div>
+      <div class="tier t1"><div class="sprinkles" data-n="5"></div></div>
+      <div class="plate"></div>
+    </div>
+
+    <div class="blow" id="blow">
+      <p class="sub" id="blowText">Blow out the candles — swipe your finger fast across the flames, or press the button.</p>
+      <div class="meter"><i id="meterFill"></i></div>
+      <div class="blow-row">
+        <button class="btn" id="puffBtn">💨 Blow out the candles</button>
+      </div>
+    </div>
+
+    <div class="win">
+      <p class="big">MAKE A WISH!</p>
+      <blockquote class="blessing">
+        <span>“The Lord bless you and keep you; the Lord make his face shine on you and be gracious to you.”</span>
+        <cite>Numbers 6:24–25</cite>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<button class="sound-toggle" id="soundToggle" aria-pressed="false" aria-label="Mute music">♫ Sound on</button>
+<div class="toast" id="toast" role="status"></div>
+
+<audio id="trackA" preload="auto" src="media/birthday-ukulele.mp3"></audio>
+<audio id="trackB" preload="auto" src="media/happy-birthday-joseph.mp3"></audio>
+
+<script>
+"use strict";
+/* =====================================================================
+   JOSEPH · ELEVEN
+   Phase 1 slideshow (10s/photo, music) → Phase 2 silent countdown →
+   Phase 3 cake, candles, fireworks, birthday song.
+   Every phase boundary is computed from one monotonic clock.
+   ===================================================================== */
+
+/* ------------------------------ CONFIG ------------------------------ */
+const CONFIG = Object.freeze({
+  NAME:            "Joseph",
+  AGE:             11,
+  SLIDE_MS:        10000,   // exactly ten seconds per photo
+  CROSSFADE_MS:    1150,    // must stay < SLIDE_MS
+  COUNTDOWN_FROM:  10,      // silent countdown start
+  FADE_OUT_MS:     1800,    // music fade at the end of phase 1
+  FADE_IN_MS:      900,
+  VOL_SLIDESHOW:   0.22,    // "childhood" sits low, under the pictures
+  VOL_FINALE:      1.0,     // the birthday song is the main event
+  CANDLES:         11,
+  BLOW_RMS:        0.13,    // mic loudness needed  (0..1)
+  BLOW_LOW_RATIO:  0.55,    // share of energy under ~500 Hz — breath is low
+  BLOW_HOLD_MS:    250,     // held that long = a real puff
+  SWIPE_SPEED:     850,     // px/second across the cake counts as wind
+  GRAVITY:         320,     // firework particle gravity (px/s²)
+  DRAG:            0.988,   // velocity kept per 1/60 s
+  PHOTOS:          ["media/photo-01.jpg", "media/photo-02.jpg", "media/photo-03.jpg", "media/photo-04.jpg", "media/photo-05.jpg", "media/photo-06.jpg", "media/photo-07.jpg", "media/photo-08.jpg", "media/photo-09.jpg", "media/photo-10.jpg", "media/photo-11.jpg"],
+});
+
+/* Derived timing — the exact millisecond the slideshow finishes.      */
+const SHOW_TOTAL_MS = CONFIG.PHOTOS.length * CONFIG.SLIDE_MS;   // 11 × 10000
+
+/* ------------------------------ UTIL -------------------------------- */
+const TAU   = Math.PI * 2;
+const $     = (s, r = document) => r.querySelector(s);
+const $$    = (s, r = document) => Array.from(r.querySelectorAll(s));
+const clamp = (v, lo, hi) => (v < lo ? lo : v > hi ? hi : v);
+const lerp  = (a, b, t) => a + (b - a) * t;
+const rand  = (a, b) => a + Math.random() * (b - a);
+const randInt = (a, b) => Math.floor(rand(a, b + 1));
+const pick  = a => a[Math.floor(Math.random() * a.length)];
+const pad2  = n => String(n).padStart(2, "0");
+const rgba  = (c, a = 1) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+
+const toast = (() => {
+  const el = $("#toast");
+  let t = null;
+  return (msg, ms = 2600) => {
+    el.textContent = msg;
+    el.classList.add("on");
+    clearTimeout(t);
+    t = setTimeout(() => el.classList.remove("on"), ms);
+  };
+})();
+
+/* =====================================================================
+   AUDIO DIRECTOR
+   Two <audio> tags, faded with an equal-power curve so the volume ramp
+   sounds linear to the ear:  v = cos(t · π/2)  going out, sin going in.
+   ===================================================================== */
+class AudioDirector {
+  constructor(a, b) {
+    this.tracks = { childhood: a, birthday: b };
+    for (const key in this.tracks) {
+      const el = this.tracks[key];
+      el.volume = 0;
+      el.loop = false;
+    }
+  }
+  /** Chrome/Safari only allow playback inside a gesture — call once. */
+  unlock() {
+    const jobs = [];
+    for (const key in this.tracks) {
+      const el = this.tracks[key];
+      jobs.push(el.play().then(() => { el.pause(); el.currentTime = 0; }).catch(() => {}));
+    }
+    return Promise.all(jobs);
+  }
+  /**
+   * Play a track exactly once. When it reaches its natural end the element
+   * is paused, zeroed and latched, so nothing can start it a second time.
+   */
+  playOnce(key, opts = {}) {
+    const el = this.tracks[key];
+    if (!el || el._spent) return;
+    el._spent = true;
+    el.addEventListener("ended", () => {
+      el.pause();
+      el.volume = 0;
+      el.currentTime = 0;
+    }, { once: true });
+    this.play(key, opts);
+  }
+  play(key, { fadeMs = CONFIG.FADE_IN_MS, target = 1 } = {}) {
+    const el = this.tracks[key];
+    if (!el) return;
+    el.currentTime = 0;
+    el.volume = 0;
+    const p = el.play();
+    if (p && p.catch) p.catch(() => toast("Tap once more to start the music"));
+    this._ramp(el, 0, target, fadeMs, "in");
+  }
+  /** Fade a track down and stop it dead — phase 2 must be silent. */
+  stop(key, { fadeMs = CONFIG.FADE_OUT_MS } = {}) {
+    const el = this.tracks[key];
+    if (!el) return Promise.resolve();
+    const from = el.volume;
+    return new Promise(resolve => {
+      this._ramp(el, from, 0, fadeMs, "out", () => {
+        el.pause();
+        el.currentTime = 0;
+        el.volume = 0;
+        resolve();
+      });
+    });
+  }
+  silenceAll() {
+    for (const key in this.tracks) {
+      const el = this.tracks[key];
+      el.pause();
+      el.volume = 0;
+      el.currentTime = 0;
+    }
+  }
+  _ramp(el, from, to, ms, shape, done) {
+    if (el._raf) cancelAnimationFrame(el._raf);
+    const t0 = performance.now();
+    const step = now => {
+      const t = clamp((now - t0) / ms, 0, 1);
+      const curve = shape === "out" ? Math.cos(t * Math.PI / 2) : Math.sin(t * Math.PI / 2);
+      el.volume = clamp(shape === "out" ? from * curve : lerp(from, to, curve), 0, 1);
+      if (t < 1) { el._raf = requestAnimationFrame(step); }
+      else { el.volume = clamp(to, 0, 1); if (done) done(); }
+    };
+    el._raf = requestAnimationFrame(step);
+  }
+}
+const Music = new AudioDirector($("#trackA"), $("#trackB"));
+
+/* =====================================================================
+   FIREWORKS — projectile physics on a canvas
+   A shell that must stall at height h needs launch speed v₀ = √(2gh),
+   straight out of  v² = u² + 2as  with v = 0 at the apex.
+   Each spark then leaves the burst on a polar vector and integrates
+   with semi-implicit Euler plus an exponential drag term.
+   ===================================================================== */
+const PALETTE = [
+  [163, 230, 53],  // lime
+  [52, 211, 153],  // jade
+  [110, 231, 183], // mint
+  [255, 209, 102], // gold
+  [255, 255, 255], // white
+  [16, 185, 129],  // emerald
+];
+
+class Spark {
+  constructor(x, y, vx, vy, colour, life, size, gravity) {
+    this.x = x; this.y = y; this.px = x; this.py = y;
+    this.vx = vx; this.vy = vy;
+    this.colour = colour;
+    this.life = life; this.maxLife = life;
+    this.size = size; this.gravity = gravity;
+  }
+  update(dt) {
+    this.life -= dt;
+    if (this.life <= 0) return false;
+    this.px = this.x; this.py = this.y;
+    const drag = Math.pow(CONFIG.DRAG, dt * 60);       // frame-rate proof
+    this.vx *= drag;
+    this.vy = this.vy * drag + this.gravity * dt;
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+    return true;
+  }
+}
+
+class Shell {
+  constructor(x, ground, apex, colour, shape, power, count, gravity) {
+    this.x = x; this.y = ground;
+    this.apex = apex;
+    this.vy = -Math.sqrt(2 * gravity * Math.max(70, ground - apex));
+    this.vx = rand(-42, 42);
+    this.colour = colour; this.shape = shape;
+    this.power = power; this.count = count; this.gravity = gravity;
+  }
+  update(dt) {
+    this.vy += this.gravity * 0.42 * dt;
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+    return this.y > this.apex && this.vy < 0;
+  }
+}
+
+/* burst shapes — each returns [vx, vy] pairs */
+const BURSTS = {
+  sphere(n, p) {
+    const out = [];
+    for (let i = 0; i < n; i++) {
+      const a = Math.random() * TAU;
+      const s = p * Math.sqrt(Math.random());          // even area density
+      out.push([Math.cos(a) * s, Math.sin(a) * s]);
+    }
+    return out;
+  },
+  ring(n, p) {
+    const out = [];
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * TAU;
+      const s = p * rand(0.94, 1.02);
+      out.push([Math.cos(a) * s, Math.sin(a) * s * 0.55]);
+    }
+    return out;
+  },
+  palm(n, p) {
+    const out = [], arms = randInt(5, 7);
+    let i = 0;
+    while (i < n) {                                    // while-loop pass
+      const a = (i % arms) * (TAU / arms) + rand(-0.12, 0.12);
+      const s = p * rand(0.55, 1.06);
+      out.push([Math.cos(a) * s, Math.sin(a) * s]);
+      i++;
+    }
+    return out;
+  },
+  willow(n, p) {
+    const out = [];
+    for (let i = 0; i < n; i++) {
+      const a = Math.random() * TAU;
+      const s = p * rand(0.24, 0.7);
+      out.push([Math.cos(a) * s, Math.sin(a) * s - p * 0.16]);
+    }
+    return out;
+  },
+  star(n, p) {
+    const out = [];
+    for (let i = 0; i < n; i++) {
+      const idx = (i / n) * 10;
+      const seg = Math.floor(idx) % 10;
+      const frac = idx - Math.floor(idx);
+      const rOut = p, rIn = p * 0.42;
+      const r = lerp(seg % 2 === 0 ? rOut : rIn, seg % 2 === 0 ? rIn : rOut, frac);
+      const a = -Math.PI / 2 + idx * (Math.PI / 5);
+      out.push([Math.cos(a) * r, Math.sin(a) * r]);
+    }
+    return out;
+  },
+};
+const SHAPES = Object.keys(BURSTS);
+
+class Fireworks {
+  constructor(canvas) {
+    this.cv = canvas;
+    this.ctx = canvas.getContext("2d");
+    this.shells = [];
+    this.sparks = [];
+    this.confetti = [];
+    this.glowCache = new Map();
+    this.autoEvery = 0;
+    this.autoTimer = 0;
+    this.last = performance.now();
+    this.cap = window.innerWidth < 760 ? 520 : 1150;
+    this.resize();
+    window.addEventListener("resize", () => this.resize());
+    requestAnimationFrame(now => this.loop(now));
+  }
+  resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.w = this.cv.clientWidth;
+    this.h = this.cv.clientHeight;
+    this.cv.width  = Math.round(this.w * dpr);
+    this.cv.height = Math.round(this.h * dpr);
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    this.k = clamp(Math.min(this.w, this.h) / 720, 0.5, 1.7);
+  }
+  glow(colour) {
+    const key = colour.join(",");
+    if (this.glowCache.has(key)) return this.glowCache.get(key);
+    const size = 64;
+    const cv = document.createElement("canvas");
+    cv.width = cv.height = size;
+    const g = cv.getContext("2d");
+    const grad = g.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+    grad.addColorStop(0,   rgba(colour.map(c => Math.min(255, c + 72)), 1));
+    grad.addColorStop(.28, rgba(colour, .88));
+    grad.addColorStop(.66, rgba(colour, .20));
+    grad.addColorStop(1,   rgba(colour, 0));
+    g.fillStyle = grad;
+    g.fillRect(0, 0, size, size);
+    this.glowCache.set(key, cv);
+    return cv;
+  }
+  launch(x, apex, colour) {
+    if (x === undefined)    x = rand(this.w * 0.10, this.w * 0.90);
+    if (apex === undefined) apex = rand(this.h * 0.08, this.h * 0.44);
+    this.shells.push(new Shell(
+      x, this.h + 14, apex,
+      colour || pick(PALETTE),
+      pick(SHAPES),
+      rand(200, 340) * this.k,
+      randInt(80, 150),
+      CONFIG.GRAVITY * this.k,
+    ));
+  }
+  volley(n = 6, gap = 180) {
+    for (let i = 0; i < n; i++) setTimeout(() => this.launch(), i * gap);
+  }
+  explode(shell) {
+    const vectors = BURSTS[shell.shape](shell.count, shell.power);
+    const heavy = shell.shape === "willow";
+    const alt = pick(PALETTE);
+    const twoTone = Math.random() < 0.42;
+    for (let i = 0; i < vectors.length; i++) {
+      const [vx, vy] = vectors[i];
+      let colour = twoTone && Math.random() < 0.4 ? alt : shell.colour;
+      colour = colour.map(c => Math.round(lerp(c, 255, Math.random() * 0.3)));
+      this.sparks.push(new Spark(
+        shell.x, shell.y,
+        vx + shell.vx * 0.25, vy,
+        colour,
+        rand(1.0, 1.9) * (heavy ? 1.7 : 1),
+        rand(2.2, 4.3) * this.k * (heavy ? 1.15 : 1),
+        CONFIG.GRAVITY * this.k * (heavy ? 0.76 : rand(0.35, 0.6)),
+      ));
+    }
+    while (this.sparks.length > this.cap) this.sparks.shift();
+  }
+  confettiBurst(n = 140) {
+    for (let i = 0; i < n; i++) {
+      this.confetti.push({
+        x: rand(0, this.w), y: rand(-this.h * 0.35, 0),
+        vx: rand(-32, 32), vy: rand(95, 250) * this.k,
+        w: rand(3, 9), h: rand(6, 14),
+        a: Math.random() * TAU, spin: rand(-4, 4),
+        colour: rgba(pick(PALETTE)),
+      });
+    }
+  }
+  loop(now) {
+    const dt = Math.min(0.05, (now - this.last) / 1000);
+    this.last = now;
+
+    if (this.autoEvery > 0) {
+      this.autoTimer -= dt;
+      if (this.autoTimer <= 0) { this.launch(); this.autoTimer = this.autoEvery * rand(0.55, 1.5); }
+    }
+    let s = this.shells.length;
+    while (s--) {
+      const shell = this.shells[s];
+      if (!shell.update(dt)) { this.explode(shell); this.shells.splice(s, 1); }
+    }
+    let p = this.sparks.length;
+    while (p--) { if (!this.sparks[p].update(dt)) this.sparks.splice(p, 1); }
+    let c = this.confetti.length;
+    while (c--) {
+      const bit = this.confetti[c];
+      bit.x += bit.vx * dt; bit.y += bit.vy * dt; bit.a += bit.spin * dt;
+      if (bit.y > this.h + 40) this.confetti.splice(c, 1);
+    }
+    this.draw();
+    requestAnimationFrame(n2 => this.loop(n2));
+  }
+  draw() {
+    const ctx = this.ctx;
+    ctx.clearRect(0, 0, this.w, this.h);
+    ctx.globalCompositeOperation = "lighter";
+    for (const shell of this.shells) {
+      const r = 19 * this.k;
+      ctx.drawImage(this.glow(shell.colour), shell.x - r, shell.y - r, r * 2, r * 2);
+    }
+    for (const spark of this.sparks) {
+      const t = clamp(spark.life / spark.maxLife, 0, 1);
+      const fade = Math.pow(t, 0.6);
+      const r = spark.size * (0.5 + 0.5 * t) * 3.2;
+      ctx.globalAlpha = Math.min(1, fade + 0.1);
+      ctx.drawImage(this.glow(spark.colour), spark.x - r, spark.y - r, r * 2, r * 2);
+      ctx.globalAlpha = fade * 0.45;
+      ctx.strokeStyle = rgba(spark.colour);
+      ctx.lineWidth = Math.max(1, spark.size * 0.5);
+      ctx.beginPath(); ctx.moveTo(spark.px, spark.py); ctx.lineTo(spark.x, spark.y); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+    for (const bit of this.confetti) {
+      ctx.save();
+      ctx.translate(bit.x, bit.y);
+      ctx.rotate(bit.a);
+      ctx.fillStyle = bit.colour;
+      ctx.fillRect(-bit.w / 2, -bit.h / 2, bit.w, Math.max(2, bit.h * Math.abs(Math.cos(bit.a))));
+      ctx.restore();
+    }
+  }
+}
+const FX = new Fireworks($("#fw"));
+
+/* =====================================================================
+   PHASE 1 — SLIDESHOW
+   One rAF clock. index = ⌊elapsed / SLIDE_MS⌋, so a dropped frame can
+   never make the show drift; photo n always ends at (n+1)·10 000 ms.
+   ===================================================================== */
+class Slideshow {
+  constructor(photos, { onEnd }) {
+    this.photos = photos;
+    this.count = photos.length;              // integer photo count
+    this.onEnd = onEnd;
+    this.index = -1;                         // integer index tracker
+    this.running = false;
+    this.build();
+  }
+  build() {
+    const stage = $("#stage"), dots = $("#dots");
+    stage.innerHTML = ""; dots.innerHTML = "";
+    for (let i = 0; i < this.count; i++) {   // classic for-loop build
+      const slide = document.createElement("div");
+      slide.className = `slide kb${i % 4}`;  // four gentle drift moves
+      slide.style.setProperty("--kb-dur", (CONFIG.SLIDE_MS + 600) + "ms");
+
+      const wash = document.createElement("img");   // blurred filler behind
+      wash.className = "wash";
+      wash.src = this.photos[i];
+      wash.alt = "";
+      wash.setAttribute("aria-hidden", "true");
+      wash.decoding = "async";
+
+      const pic = document.createElement("img");    // the whole photo, uncropped
+      pic.className = "pic";
+      pic.src = this.photos[i];
+      pic.alt = `${CONFIG.NAME} — photo ${i + 1} of ${this.count}`;
+      pic.decoding = "async";
+
+      slide.appendChild(wash);
+      slide.appendChild(pic);
+      stage.appendChild(slide);
+      dots.appendChild(document.createElement("i"));
+    }
+    this.slides = $$(".slide", stage);
+    this.dots   = $$("i", dots);
+    $("#total").textContent = pad2(this.count);
+  }
+  start() {
+    this.running = true;
+    this.startedAt = performance.now();
+    const tick = now => {
+      if (!this.running) return;
+      const elapsed = now - this.startedAt;
+      const i = Math.floor(elapsed / CONFIG.SLIDE_MS);   // integer division
+      if (i >= this.count) { this.finish(); return; }
+      if (i !== this.index) this.show(i);
+      const within = elapsed - i * CONFIG.SLIDE_MS;      // 0 … 9999 ms
+      $("#slideBar").style.width = ((within / CONFIG.SLIDE_MS) * 100).toFixed(2) + "%";
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  show(i) {
+    this.index = i;
+    for (let k = 0; k < this.count; k++) {
+      this.slides[k].classList.toggle("on", k === i);
+      this.dots[k].classList.toggle("done", k < i);
+      this.dots[k].classList.toggle("now", k === i);
+    }
+    $("#idx").textContent = pad2(i + 1);
+  }
+  finish() {
+    if (!this.running) return;
+    this.running = false;
+    $("#slideBar").style.width = "100%";
+    this.onEnd();
+  }
+}
+
+/* =====================================================================
+   PHASE 2 — SILENT COUNTDOWN
+   ===================================================================== */
+class Countdown {
+  constructor(from, { onDone }) {
+    this.total = parseInt(from, 10);
+    this.onDone = onDone;
+    this.shown = null;
+    this.ringLen = TAU * 90;                 // r = 90 in the SVG
+    $("#ring").setAttribute("stroke-dasharray", this.ringLen.toFixed(1));
+  }
+  start() {
+    this.startedAt = performance.now();
+    const totalMs = this.total * 1000;
+    const tick = now => {
+      const left = Math.max(0, totalMs - (now - this.startedAt));
+      const whole = Math.ceil(left / 1000);              // 10, 9, 8 …
+      if (whole !== this.shown && whole > 0) {
+        this.shown = whole;
+        const el = $("#num");
+        el.textContent = String(whole);
+        el.classList.remove("beat"); void el.offsetWidth; el.classList.add("beat");
+      }
+      $("#ring").setAttribute("stroke-dashoffset",
+        (this.ringLen * (1 - left / totalMs)).toFixed(1));
+      if (left <= 0) { this.onDone(); return; }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+}
+
+/* =====================================================================
+   PHASE 3 — CAKE, CANDLES, BLOW DETECTION
+   ===================================================================== */
+/* sprinkles, scattered with a for-loop so the cake is never identical */
+for (const strip of $$(".sprinkles")) {
+  const n = parseInt(strip.dataset.n, 10);
+  for (let i = 0; i < n; i++) {
+    const bit = document.createElement("i");
+    bit.style.left = (6 + (i / n) * 86 + rand(-3, 3)).toFixed(1) + "%";
+    bit.style.top  = rand(38, 76).toFixed(1) + "%";
+    bit.style.transform = `rotate(${rand(-50, 50).toFixed(0)}deg)`;
+    bit.style.background = pick(["#FFD166", "#FFFDF5", "#A3E635"]);
+    strip.appendChild(bit);
+  }
+}
+/* eleven candles */
+const candlesEl = $("#candles");
+for (let i = 0; i < CONFIG.CANDLES; i++) {
+  const c = document.createElement("div");
+  c.className = "candle";
+  c.dataset.index = String(i);
+  c.innerHTML = '<span class="wick"></span><span class="flame"></span><span class="smoke"></span>';
+  candlesEl.appendChild(c);
+}
+const candles = $$(".candle", candlesEl);
+let candlesOut = false;
+
+function leanFlames(strength) {
+  const lean = strength > 0.34;
+  for (const c of candles) c.classList.toggle("lean", lean);
+}
+
+function blowOutCandles() {
+  if (candlesOut) return;
+  candlesOut = true;
+  /* a breath crosses the cake, so they go out in sequence, not at once */
+  let i = 0;
+  const wave = setInterval(() => {
+    if (i >= candles.length) { clearInterval(wave); return; }
+    candles[i].classList.remove("lean");
+    candles[i].classList.add("out");
+    i++;
+  }, 60);
+  const settle = candles.length * 60 + 240;
+  setTimeout(() => {
+    $("#finale").classList.add("done");
+    FX.autoEvery = 0.55;
+    FX.volley(12, 165);
+    FX.confettiBurst(200);
+  }, settle);
+}
+
+const meterFill = $("#meterFill");
+$("#puffBtn").addEventListener("click", blowOutCandles);
+
+/* swipe-across-the-flames fallback: wind = pointer speed in px/second */
+(function swipeWind() {
+  const cake = $("#cake");
+  let lastX = 0, lastY = 0, lastT = 0, charge = 0;
+  cake.addEventListener("pointermove", ev => {
+    if (candlesOut) return;
+    const now = performance.now();
+    if (lastT) {
+      const dx = ev.clientX - lastX, dy = ev.clientY - lastY;
+      const dt = Math.max(1, now - lastT) / 1000;
+      const speed = Math.hypot(dx, dy) / dt;
+      charge = clamp(charge + (speed - CONFIG.SWIPE_SPEED) / 3800, 0, 1.35);
+      meterFill.style.width = (clamp(charge, 0, 1) * 100).toFixed(1) + "%";
+      leanFlames(charge);
+      if (charge >= 1) blowOutCandles();
+    }
+    lastX = ev.clientX; lastY = ev.clientY; lastT = now;
+  });
+  cake.addEventListener("pointerleave", () => { charge = 0; lastT = 0; });
+  cake.addEventListener("click", () => { if (!candlesOut) charge = Math.min(1.35, charge + 0.3); });
+})();
+
+/* =====================================================================
+   THE DIRECTOR — phases, in order, with all the audio rules
+   ===================================================================== */
+const SCENES = ["gate", "phase1", "beforeCake", "phase2", "phase3"];
+let currentScene = "gate";
+function goTo(id) {
+  for (const name of SCENES) {
+    const scene = $("#" + name);
+    scene.classList.toggle("live", name === id);
+    scene.inert = name !== id;
+    scene.setAttribute("aria-hidden", String(name !== id));
+  }
+  const heading = $("#" + id).querySelector("h1,h2,button");
+  if (heading) { heading.setAttribute("tabindex", "-1"); heading.focus({preventScroll:true}); }
+  currentScene = id;
+}
+
+const show = new Slideshow(CONFIG.PHOTOS, { onEnd: endOfSlideshow });
+const countdown = new Countdown(CONFIG.COUNTDOWN_FROM, { onDone: startFinale });
+
+function startSlideshow() {
+  goTo("phase1");
+  FX.autoEvery = 0;                       // no sparks over the photos
+  Music.play("childhood", { fadeMs: 1400, target: CONFIG.VOL_SLIDESHOW });
+  show.start();
+}
+
+async function endOfSlideshow() {
+  /* Phase 2 is silent: fade the song out, then confirm total silence. */
+  await Music.stop("childhood", { fadeMs: CONFIG.FADE_OUT_MS });
+  Music.silenceAll();
+  goTo("beforeCake");
+}
+
+$("#countdownBtn").addEventListener("click", () => {
+  goTo("phase2");
+  countdown.start();
+}, { once: true });
+
+function startFinale() {
+  goTo("phase3");
+  /* One play, all the way through, then it stops for good. */
+  Music.playOnce("birthday", { fadeMs: 700, target: CONFIG.VOL_FINALE });
+  FX.autoEvery = 2.2;                     // a few shells while he blows
+  FX.volley(3, 260);
+}
+
+/* ---- preload, then the single gesture that unlocks everything ------- */
+(function preload() {
+  const bar = $("#loadBar"), text = $("#loadText"), btn = $("#startBtn");
+  const assets = CONFIG.PHOTOS.slice();
+  let loaded = 0;
+  const bump = () => {
+    loaded++;
+    const pct = Math.round((loaded / assets.length) * 100);
+    bar.style.width = pct + "%";
+    text.textContent = `loading photos — ${pct}%`;
+    if (loaded >= assets.length) {
+      btn.disabled = false;
+      btn.textContent = "▶  Start the show";
+      text.textContent = "";                 // no stats line on the card
+      text.hidden = true;
+      $(".load").hidden = true;
+    }
+  };
+  for (const src of assets) {              // for-of over the array
+    const img = new Image();
+    img.onload = bump;
+    img.onerror = bump;
+    img.src = src;
+  }
+})();
+
+$("#startBtn").addEventListener("click", async () => {
+  $("#startBtn").disabled = true;
+  await Music.unlock();                    // one gesture unlocks both tracks
+  startSlideshow();
+});
+/* keyboard: escape silences everything (the slideshow always plays in full) */
+window.addEventListener("keydown", ev => {
+  if (ev.key === "Escape") { setMuted(true); }
+});
+
+let muted = false;
+function setMuted(value) {
+  muted = value;
+  for (const el of Object.values(Music.tracks)) el.muted = muted;
+  $("#soundToggle").textContent = muted ? "♫ Sound off" : "♫ Sound on";
+  $("#soundToggle").setAttribute("aria-pressed", String(muted));
+  $("#soundToggle").setAttribute("aria-label", muted ? "Unmute music" : "Mute music");
+}
+$("#soundToggle").addEventListener("click", () => {
+  setMuted(!muted);
+  if (!muted) {
+    const track = currentScene === "phase1" ? Music.tracks.childhood : currentScene === "phase3" ? Music.tracks.birthday : null;
+    if (track && track.paused && !track.ended) track.play().catch(() => toast("Music could not start. Try again."));
+  }
+});
+for (const name of SCENES) { if (name !== currentScene) $("#" + name).inert = true; }
+
+/* a tap anywhere in the finale sends up another shell */
+window.addEventListener("pointerdown", ev => {
+  if (currentScene !== "phase3") return;
+  if (ev.target.closest("button, .cake")) return;
+  FX.launch(ev.clientX, Math.min(ev.clientY, FX.h * 0.55));
+});
+
+/* host shortcuts for rehearsing:  ?phase=2  or  ?phase=3 */
+(function deepLink() {
+  const wanted = parseInt(new URLSearchParams(location.search).get("phase") || "0", 10);
+  if (wanted === 2) { goTo("phase2"); countdown.start(); }
+  if (wanted === 3) { goTo("phase3"); FX.autoEvery = 2.2; }
+})();
+</script>
+
+</body>
+</html>
